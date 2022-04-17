@@ -12,7 +12,7 @@ export interface SvgOption extends SvgoOptions {
   plugins: any[]
 }
 
-export interface VitePluginImageMin {
+export interface VuePressPluginImageminOption {
   /**
    * Log compressed files and their compression ratios.
    * @default: true

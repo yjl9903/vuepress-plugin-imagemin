@@ -1,5 +1,5 @@
 import type { Plugin, App } from 'vuepress';
-import type { VitePluginImageMin } from './types'
+import type { VuePressPluginImageminOption } from './types'
 
 import path from 'pathe'
 import fs from 'fs-extra'
@@ -27,7 +27,7 @@ const debug = Debug.debug('imagemin')
 
 const extRE = /\.(png|jpeg|gif|jpg|bmp|svg)$/i
 
-export default function (options: VitePluginImageMin = {}) {
+export default function (options: VuePressPluginImageminOption = {}): Plugin {
   let outputPath: string
   let publicDir: string
   // let config: ResolvedConfig
@@ -35,7 +35,7 @@ export default function (options: VitePluginImageMin = {}) {
   const { disable = false, filter = extRE, verbose = true } = options
 
   if (disable) {
-    return {} as any
+    return { name: 'vuepress-plugin-imagemin' }
   }
 
   debug('plugin options:', options)
@@ -65,52 +65,47 @@ export default function (options: VitePluginImageMin = {}) {
 
       return content
     } catch (error) {
+      debug('imagemin error:' + filePath)
       // config.logger.error('imagemin error:' + filePath)
     }
   }
 
-  return {
-    name: 'vite:imagemin',
+  return <Plugin> {
+    name: 'vuepress-plugin-imagemin',
     apply: 'build',
     enforce: 'post',
-    onPrepared(app) {
-      console.log(app)
+    onPrepared(app: App) {
       outputPath = app.dir.dest()
+      publicDir = app.dir.public();
+      debug({ outputPath, publicDir });
     },
-    // configResolved(resolvedConfig) {
-    //   config = resolvedConfig
-    //   outputPath = config.build.outDir
+    // async generateBundle(_, bundler) {
+    //   tinyMap.clear()
+    //   const files: string[] = []
 
-    //   // get public static assets directory: https://vitejs.dev/guide/assets.html#the-public-directory
-    //   if (typeof config.publicDir === 'string') {
-    //     publicDir = config.publicDir
+    //   Object.keys(bundler).forEach((key) => {
+    //     filterFile(path.resolve(outputPath, key), filter) && files.push(key)
+    //   })
+
+    //   debug('files:', files)
+
+    //   if (!files.length) {
+    //     return
     //   }
+
+    //   const handles = files.map(async (filePath: string) => {
+    //     const source = (bundler[filePath] as any).source
+    //     const content = await processFile(filePath, source)
+    //     if (content) {
+    //       ;(bundler[filePath] as any).source = content
+    //     }
+    //   })
+
+    //   await Promise.all(handles)
     // },
-    async generateBundle(_, bundler) {
-      tinyMap.clear()
-      const files: string[] = []
+    async onGenerated() {
+      debug('onGenerated')
 
-      Object.keys(bundler).forEach((key) => {
-        filterFile(path.resolve(outputPath, key), filter) && files.push(key)
-      })
-
-      debug('files:', files)
-
-      if (!files.length) {
-        return
-      }
-
-      const handles = files.map(async (filePath: string) => {
-        const source = (bundler[filePath] as any).source
-        const content = await processFile(filePath, source)
-        if (content) {
-          ;(bundler[filePath] as any).source = content
-        }
-      })
-
-      await Promise.all(handles)
-    },
-    async closeBundle() {
       if (publicDir) {
         const files: string[] = []
 
@@ -119,11 +114,15 @@ export default function (options: VitePluginImageMin = {}) {
           filterFile(file, filter) && files.push(file)
         })
 
+        debug({ files })
+
         if (files.length) {
           const handles = files.map(async (publicFilePath: string) => {
             // now convert the path to the output folder
-            const filePath = publicFilePath.replace(publicDir + path.sep, '')
+            const filePath = path.relative(publicDir, publicFilePath);
             const fullFilePath = path.join(outputPath, filePath)
+
+            debug({ filePath, fullFilePath })
 
             if (fs.existsSync(fullFilePath) === false) {
               return
@@ -147,54 +146,56 @@ export default function (options: VitePluginImageMin = {}) {
         }
       }
 
-      // if (verbose) {
-      //   handleOutputLogger(config, tinyMap)
-      // }
+      if (verbose) {
+        handleOutputLogger(outputPath, tinyMap)
+      }
     },
-  } as Plugin
+  }
 }
 
 // Packed output logic
-// function handleOutputLogger(
-//   config: App,
-//   recordMap: Map<string, { size: number; oldSize: number; ratio: number }>,
-// ) {
-//   config.logger.info(
-//     `\n${chalk.cyan('✨ [vuepress-plugin-imagemin]')}` +
-//       '- compressed image resource successfully: ',
-//   )
+function handleOutputLogger(
+  outDir: string,
+  recordMap: Map<string, { size: number; oldSize: number; ratio: number }>,
+) {
+  const info = (...args: any[]) => (console.log(...args));
 
-//   const keyLengths = Array.from(recordMap.keys(), (name) => name.length)
-//   const valueLengths = Array.from(
-//     recordMap.values(),
-//     (value) => `${Math.floor(100 * value.ratio)}`.length,
-//   )
+  info(
+    `\n${chalk.cyan('✨ [vuepress-plugin-imagemin]')}` +
+      '- compressed image resource successfully: ',
+  )
 
-//   const maxKeyLength = Math.max(...keyLengths)
-//   const valueKeyLength = Math.max(...valueLengths)
-//   recordMap.forEach((value, name) => {
-//     let { ratio } = value
-//     const { size, oldSize } = value
-//     ratio = Math.floor(100 * ratio)
-//     const fr = `${ratio}`
+  const keyLengths = Array.from(recordMap.keys(), (name) => name.length)
+  const valueLengths = Array.from(
+    recordMap.values(),
+    (value) => `${Math.floor(100 * value.ratio)}`.length,
+  )
 
-//     const denseRatio =
-//       ratio > 0 ? chalk.red(`+${fr}%`) : ratio <= 0 ? chalk.green(`${fr}%`) : ''
+  const maxKeyLength = Math.max(...keyLengths)
+  const valueKeyLength = Math.max(...valueLengths)
+  recordMap.forEach((value, name) => {
+    let { ratio } = value
+    const { size, oldSize } = value
+    ratio = Math.floor(100 * ratio)
+    const fr = `${ratio}`
 
-//     const sizeStr = `${oldSize.toFixed(2)}kb / tiny: ${size.toFixed(2)}kb`
+    const denseRatio =
+      ratio > 0 ? chalk.red(`+${fr}%`) : ratio <= 0 ? chalk.green(`${fr}%`) : ''
 
-//     config.logger.info(
-//       chalk.dim(path.basename(config.build.outDir)) +
-//         '/' +
-//         chalk.blueBright(name) +
-//         ' '.repeat(2 + maxKeyLength - name.length) +
-//         chalk.gray(`${denseRatio} ${' '.repeat(valueKeyLength - fr.length)}`) +
-//         ' ' +
-//         chalk.dim(sizeStr),
-//     )
-//   })
-//   config.logger.info('\n')
-// }
+    const sizeStr = `${oldSize.toFixed(2)}kb / tiny: ${size.toFixed(2)}kb`
+
+    info(
+      chalk.dim(path.basename(outDir)) +
+        '/' +
+        chalk.blueBright(name) +
+        ' '.repeat(2 + maxKeyLength - name.length) +
+        chalk.gray(`${denseRatio} ${' '.repeat(valueKeyLength - fr.length)}`) +
+        ' ' +
+        chalk.dim(sizeStr),
+    )
+  })
+  info('')
+}
 
 function filterFile(
   file: string,
@@ -215,7 +216,7 @@ function filterFile(
 
 // imagemin compression plugin configuration
 function getImageminPlugins(
-  options: VitePluginImageMin = {},
+  options: VuePressPluginImageminOption = {},
 ): imagemin.Plugin[] {
   const {
     gifsicle = true,
