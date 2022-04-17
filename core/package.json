@@ -19,7 +19,7 @@
     "directory": "packages/core"
   },
   "license": "MIT",
-  "author": "Vben",
+  "author": "XLor",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
