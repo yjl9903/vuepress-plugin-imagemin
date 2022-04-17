@@ -1,60 +1,32 @@
-# vite-plugin-imagemin
-
-**English** | [中文](./README.zh_CN.md)
+# vuepress-plugin-imagemin
 
 [![npm][npm-img]][npm-url] [![node][node-img]][node-url]
 
-A vite plugin for compressing image assets
+> This repo is forked and modified from [vite-plugin-imagemin](https://github.com/vbenjs/vite-plugin-imagemin).
 
-## Install (yarn or npm)
+A VuePress plugin for compressing image assets
+
+## Install
 
 **node version:** >=12.0.0
 
 **vite version:** >=2.0.0
 
-```
-yarn add vite-plugin-imagemin -D
-```
-
-or
-
-```
-npm i vite-plugin-imagemin -D
-```
-
-### China installation note
-
-Because imagemin is not easy to install in China. Several solutions are now available
-
-1. Use yarn to configure in package.json (recommended)
-
-```json
-"resolutions": {
-    "bin-wrapper": "npm:bin-wrapper-china"
-  },
-
-```
-
-2. Use npm, add the following configuration to the computer host file
-
 ```bash
-
-199.232.4.133 raw.githubusercontent.com
+npm i vuepress-plugin-imagemin -D
 ```
-
-3. Install with cnpm (not recommended)
 
 ## Usage
 
 - Configuration plugin in vite.config.ts
 
 ```ts
-import viteImagemin from 'vite-plugin-imagemin'
+import Imagemin from 'vuepress-plugin-imagemin'
 
 export default () => {
   return {
     plugins: [
-      viteImagemin({
+      Imagemin({
         gifsicle: {
           optimizationLevel: 7,
           interlaced: false,
@@ -111,19 +83,12 @@ npm run dev:build
 
 ```
 
-## Sample project
-
-[Vben Admin](https://github.com/anncwb/vue-vben-admin)
-
 ## License
 
 MIT
 
 ## Inspiration
 
-[vite-plugin-compress](https://github.com/alloc/vite-plugin-compress)
++ [vite-plugin-compress](https://github.com/alloc/vite-plugin-compress)
 
-[npm-img]: https://img.shields.io/npm/v/vite-plugin-imagemin.svg
-[npm-url]: https://npmjs.com/package/vite-plugin-imagemin
-[node-img]: https://img.shields.io/node/v/vite-plugin-imagemin.svg
-[node-url]: https://nodejs.org/en/about/releases/
++ [vite-plugin-imagemin](https://github.com/vbenjs/vite-plugin-imagemin)

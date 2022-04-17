@@ -21,7 +21,7 @@ import imageminSvgo from 'imagemin-svgo'
 import imageminWebp from 'imagemin-webp'
 import imageminJpegTran from 'imagemin-jpegtran'
 
-const debug = Debug.debug('vite-plugin-imagemin')
+const debug = Debug.debug('imagemin')
 
 const extRE = /\.(png|jpeg|gif|jpg|bmp|svg)$/i
 
@@ -156,7 +156,7 @@ function handleOutputLogger(
   recordMap: Map<string, { size: number; oldSize: number; ratio: number }>,
 ) {
   config.logger.info(
-    `\n${chalk.cyan('✨ [vite-plugin-imagemin]')}` +
+    `\n${chalk.cyan('✨ [vuepress-plugin-imagemin]')}` +
       '- compressed image resource successfully: ',
   )
 

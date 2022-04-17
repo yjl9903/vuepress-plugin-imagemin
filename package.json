@@ -1,42 +1,46 @@
 {
-  "name": "vite-plugin-imagemin-monorepo",
+  "version": "0.0.0",
   "private": true,
-  "version": "0.6.1",
-  "description": "A vite plugin for compressing image assets",
-  "license": "MIT",
-  "author": "Vben",
-  "scripts": {
-    "dev:play": "pnpm run dev --filter playground-basic",
-    "build:play": "pnpm run build --filter playground-basic",
-    "stub": "pnpm run prepack --filter ./packages -- --stub",
-    "postinstall": "pnpm run stub",
-    "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "lint:pretty": "pretty-quick --staged",
-    "lint:eslint": "eslint \"packages/**/*.{ts,tsx}\" --fix",
-    "prepare": "husky install",
-    "preinstall": "npx only-allow pnpm",
-    "test": "vitest"
-  },
+  "description": "A VuePress plugin for compressing image assets",
   "keywords": [
     "vite",
-    "vite-plugin",
+    "vuepress",
+    "vuepress-plugin",
     "imagemin",
     "vben"
   ],
+  "homepage": "https://github.com/yjl9903/vuepress-plugin-imagemin/tree/master/#readme",
+  "bugs": {
+    "url": "https://github.com/yjl9903/vuepress-plugin-imagemin/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anncwb/vite-plugin-imagemin"
+    "url": "https://github.com/yjl9903/vuepress-plugin-imagemin"
   },
-  "bugs": {
-    "url": "https://github.com/anncwb/vite-plugin-imagemin/issues"
+  "license": "MIT",
+  "author": "Vben",
+  "scripts": {
+    "build": "pnpm run build -C packages/core",
+    "build:play": "pnpm run build --filter playground-basic",
+    "dev:play": "pnpm run dev --filter playground-basic",
+    "lint:eslint": "eslint \"packages/**/*.{ts,tsx}\" --fix",
+    "lint:pretty": "pretty-quick --staged",
+    "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "release": "bumpp --commit --push --tag && pnpm publish",
+    "stub": "pnpm run prepack --filter ./packages -- --stub",
+    "test": "vitest",
+    "preversion": "pnpm build"
   },
-  "homepage": "https://github.com/anncwb/vite-plugin-imagemin/tree/master/#readme",
-  "peerDependencies": {
-    "vite": ">=2.0.0"
-  },
-  "resolutions": {
-    "bin-wrapper": "npm:bin-wrapper-china",
-    "gifsicle": "5.2.0"
+  "lint-staged": {
+    "*": [
+      "prettier --write --ignore-unknown"
+    ],
+    "packages/**/*.d.ts": [
+      "eslint --ext .ts"
+    ],
+    "packages/*/{src,types}/**/*.ts": [
+      "eslint --ext .ts"
+    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
@@ -46,31 +50,23 @@
     "@types/node": "^17.0.12",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
+    "bumpp": "^7.1.1",
     "commitizen": "^4.2.4",
     "conventional-changelog-cli": "^2.2.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^6.2.0",
-    "husky": "^7.0.4",
     "lint-staged": "^12.3.2",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "tsup": "^5.11.11",
     "typescript": "^4.5.5",
     "unbuild": "^0.6.8",
-    "vite": "^2.7.13",
-    "vitest": "^0.2.4"
+    "vite": "^2.9.5",
+    "vitest": "^0.9.3"
   },
-  "lint-staged": {
-    "*": [
-      "prettier --write --ignore-unknown"
-    ],
-    "packages/*/{src,types}/**/*.ts": [
-      "eslint --ext .ts"
-    ],
-    "packages/**/*.d.ts": [
-      "eslint --ext .ts"
-    ]
+  "peerDependencies": {
+    "vuepress": ">=2.0.0-beta.36"
   }
 }
