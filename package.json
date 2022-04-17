@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "A VuePress plugin for compressing image assets",
   "keywords": [
@@ -26,7 +26,7 @@
     "lint:eslint": "eslint \"packages/**/*.{ts,tsx}\" --fix",
     "lint:pretty": "pretty-quick --staged",
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "release": "bumpp --commit --push --tag && pnpm publish",
+    "release": "bumpp --commit --push --tag",
     "test": "vitest",
     "preversion": "pnpm build"
   },
