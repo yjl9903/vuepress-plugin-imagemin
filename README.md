@@ -1,7 +1,5 @@
 # vuepress-plugin-imagemin
 
-[![npm][npm-img]][npm-url] [![node][node-img]][node-url]
-
 > This repo is forked and modified from [vite-plugin-imagemin](https://github.com/vbenjs/vite-plugin-imagemin).
 
 A VuePress plugin for compressing image assets

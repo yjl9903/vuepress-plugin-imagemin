@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "vuepress build",
+    "dev": "vuepress dev"
+  },
+  "devDependencies": {
+    "vuepress": "^2.0.0-beta.36",
+    "vuepress-plugin-imagemin": "workspace:*"
+  }
+}

@@ -13,6 +13,6 @@
     "noEmitOnError": true,
     "noImplicitAny": false
   },
-  "include": ["./packages"],
+  "include": ["./core"],
   "exclude": ["**/dist", "**/node_modules", "**/test"]
 }
