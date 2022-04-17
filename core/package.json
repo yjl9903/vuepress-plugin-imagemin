@@ -35,9 +35,7 @@
   ],
   "scripts": {
     "build": "pnpm unbuild",
-    "dev": "pnpm unbuild --stub",
-    "prepack": "pnpm unbuild",
-    "prepublishOnly": "npm run build"
+    "dev": "pnpm unbuild --stub"
   },
   "dependencies": {
     "@types/imagemin": "^7.0.1",

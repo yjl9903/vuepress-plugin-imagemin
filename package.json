@@ -27,7 +27,6 @@
     "lint:pretty": "pretty-quick --staged",
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "bumpp --commit --push --tag && pnpm publish",
-    "stub": "pnpm run prepack --filter ./packages -- --stub",
     "test": "vitest",
     "preversion": "pnpm build"
   },
