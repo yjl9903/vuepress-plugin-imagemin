@@ -25,7 +25,7 @@ import {
 
 const debug = Debug.debug('imagemin')
 
-const extRE = /\.(png|jpeg|gif|jpg|bmp|svg)$/i
+const extRE = /\.(png|jpeg|jpg|gif|bmp|svg|webp)$/i
 
 export default function (options: VuePressPluginImageminOption = {}): Plugin {
   let outputPath: string
@@ -147,7 +147,7 @@ export default function (options: VuePressPluginImageminOption = {}): Plugin {
       }
 
       if (verbose) {
-        handleOutputLogger(outputPath, tinyMap)
+        handleOutputLogger(tinyMap)
       }
     },
   }
@@ -155,7 +155,6 @@ export default function (options: VuePressPluginImageminOption = {}): Plugin {
 
 // Packed output logic
 function handleOutputLogger(
-  outDir: string,
   recordMap: Map<string, { size: number; oldSize: number; ratio: number }>,
 ) {
   const info = (...args: any[]) => (console.log(...args));
@@ -219,7 +218,7 @@ function getImageminPlugins(
 ): imagemin.Plugin[] {
   const {
     gifsicle = true,
-    webp = false,
+    webp = true,
     mozjpeg = false,
     pngquant = false,
     optipng = true,
