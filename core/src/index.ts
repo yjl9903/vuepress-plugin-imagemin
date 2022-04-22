@@ -185,13 +185,12 @@ function handleOutputLogger(
     const sizeStr = `${oldSize.toFixed(2)}kb / tiny: ${size.toFixed(2)}kb`
 
     info(
-      chalk.dim(path.basename(outDir)) +
-        '/' +
-        chalk.blueBright(name) +
-        ' '.repeat(2 + maxKeyLength - name.length) +
-        chalk.gray(`${denseRatio} ${' '.repeat(valueKeyLength - fr.length)}`) +
-        ' ' +
-        chalk.dim(sizeStr),
+      '/' +
+      chalk.blueBright(name) +
+      ' '.repeat(2 + maxKeyLength - name.length) +
+      chalk.gray(`${denseRatio} ${' '.repeat(valueKeyLength - fr.length)}`) +
+      ' ' +
+      chalk.dim(sizeStr),
     )
   })
   info('')
