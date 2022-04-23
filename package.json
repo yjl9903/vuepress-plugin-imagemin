@@ -23,6 +23,7 @@
     "build": "pnpm run build -C core",
     "build:play": "pnpm run build -C playground",
     "dev:play": "pnpm run dev -C playground",
+    "format": "prettier --write core/**/*.ts",
     "lint:eslint": "eslint \"packages/**/*.{ts,tsx}\" --fix",
     "lint:pretty": "pretty-quick --staged",
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",

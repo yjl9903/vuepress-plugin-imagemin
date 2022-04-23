@@ -18,40 +18,48 @@ export interface VuePressPluginImageminOption {
    * @default: true
    */
   verbose?: boolean
+
   /**
    * Filter files that do not need to be compressed
    */
   filter?: RegExp | ((file: string) => boolean)
+
   /**
    * Whether to enable compression
    * @default: false
    */
   disable?: boolean
+
   /**
    * gif compression configuration
    * @default: {enabled:true}
    */
   gifsicle?: EnabledOptions<GifsicleOptions>
+
   /**
    * svg compression configuration
    * @default: {enabled:true}
    */
   svgo?: EnabledOptions<SvgOption>
+
   /**
    * jpeg compression configuration
    * @default: {enabled:false}
    */
   mozjpeg?: EnabledOptions<MozjpegOptions>
+
   /**
    * png compression configuration
    * @default: {enabled:true}
    */
   optipng?: EnabledOptions<OptipngOptions>
+
   /**
    * png compression configuration
    * @default: {enabled:false}
    */
   pngquant?: EnabledOptions<PngquantOptions>
+
   /**
    * webp compression configuration
    * @default: {enabled:false}

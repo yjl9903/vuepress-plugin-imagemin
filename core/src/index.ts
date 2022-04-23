@@ -1,4 +1,4 @@
-import type { Plugin, App } from 'vuepress';
+import type { Plugin, App } from 'vuepress'
 import type { VuePressPluginImageminOption } from './types'
 
 import path from 'pathe'
@@ -70,14 +70,14 @@ export default function (options: VuePressPluginImageminOption = {}): Plugin {
     }
   }
 
-  return <Plugin> {
+  return <Plugin>{
     name: 'vuepress-plugin-imagemin',
     apply: 'build',
     enforce: 'post',
     onPrepared(app: App) {
       outputPath = app.dir.dest()
-      publicDir = app.dir.public();
-      debug({ outputPath, publicDir });
+      publicDir = app.dir.public()
+      debug({ outputPath, publicDir })
     },
     // async generateBundle(_, bundler) {
     //   tinyMap.clear()
@@ -119,7 +119,7 @@ export default function (options: VuePressPluginImageminOption = {}): Plugin {
         if (files.length) {
           const handles = files.map(async (publicFilePath: string) => {
             // now convert the path to the output folder
-            const filePath = path.relative(publicDir, publicFilePath);
+            const filePath = path.relative(publicDir, publicFilePath)
             const fullFilePath = path.join(outputPath, filePath)
 
             debug({ filePath, fullFilePath })
@@ -157,7 +157,7 @@ export default function (options: VuePressPluginImageminOption = {}): Plugin {
 function handleOutputLogger(
   recordMap: Map<string, { size: number; oldSize: number; ratio: number }>,
 ) {
-  const info = (...args: any[]) => (console.log(...args));
+  const info = (...args: any[]) => console.log(...args)
 
   info(
     `\n${chalk.cyan('✨ [vuepress-plugin-imagemin]')}` +
@@ -185,11 +185,11 @@ function handleOutputLogger(
 
     info(
       '/' +
-      chalk.blueBright(name) +
-      ' '.repeat(2 + maxKeyLength - name.length) +
-      chalk.gray(`${denseRatio} ${' '.repeat(valueKeyLength - fr.length)}`) +
-      ' ' +
-      chalk.dim(sizeStr),
+        chalk.blueBright(name) +
+        ' '.repeat(2 + maxKeyLength - name.length) +
+        chalk.gray(`${denseRatio} ${' '.repeat(valueKeyLength - fr.length)}`) +
+        ' ' +
+        chalk.dim(sizeStr),
     )
   })
   info('')
