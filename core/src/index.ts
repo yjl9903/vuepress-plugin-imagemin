@@ -1,5 +1,5 @@
 import type { Plugin, App } from 'vuepress'
-import type { VuePressPluginImageminOption } from './types'
+import type { FilterType, VuePressPluginImageminOption } from './types'
 
 import path from 'pathe'
 import fs from 'fs-extra'
@@ -32,10 +32,43 @@ export default function (options: VuePressPluginImageminOption = {}): Plugin {
   let publicDir: string
   // let config: ResolvedConfig
 
-  const { disable = false, filter = extRE, verbose = true } = options
+  const { disable = false, include, exclude, verbose = true } = options
 
   if (disable) {
     return { name: 'vuepress-plugin-imagemin' }
+  }
+
+  function filterFile(filename: string) {
+    if (extRE.test(filename)) {
+      const test = (cond: FilterType) => {
+        if (typeof cond === 'string') {
+          return filename === cond;
+        } else if (isRegExp(cond)) {
+          return cond.test(filename);
+        } else if (Array.isArray(cond)) {
+          for (const c of cond) {
+            if (typeof c === 'string') {
+              if (filename === c) return true;
+            } else if (isRegExp(c)) {
+              if (c.test(filename)) return true;
+            }
+          }
+          return false
+        } else if (isFunction(cond)) {
+          return cond(filename);
+        } else {
+          return false;
+        }
+      };
+
+      if (!exclude || !test(exclude)) {
+        return !include || test(include);
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   debug('plugin options:', options)
@@ -111,7 +144,7 @@ export default function (options: VuePressPluginImageminOption = {}): Plugin {
 
         // try to find any static images in original static folder
         readAllFiles(publicDir).forEach((file) => {
-          filterFile(file, filter) && files.push(file)
+          filterFile(file) && files.push(file)
         })
 
         debug({ files })
@@ -193,23 +226,6 @@ function handleOutputLogger(
     )
   })
   info('')
-}
-
-function filterFile(
-  file: string,
-  filter: RegExp | ((file: string) => boolean),
-) {
-  if (filter) {
-    const isRe = isRegExp(filter)
-    const isFn = isFunction(filter)
-    if (isRe) {
-      return (filter as RegExp).test(file)
-    }
-    if (isFn) {
-      return (filter as (file: any) => any)(file)
-    }
-  }
-  return false
 }
 
 // imagemin compression plugin configuration
