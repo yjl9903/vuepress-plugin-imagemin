@@ -28,7 +28,7 @@
     "lint:eslint": "eslint \"packages/**/*.{ts,tsx}\" --fix",
     "lint:pretty": "pretty-quick --staged",
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "release": "bumpp package.json core/package.json --commit --push --tag",
+    "release": "bumpp package.json core/package.json --commit --push --tag && pnpm -r publish --access public",
     "test": "vitest",
     "preversion": "pnpm build"
   },
