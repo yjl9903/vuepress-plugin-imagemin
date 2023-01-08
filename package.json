@@ -1,4 +1,5 @@
 {
+  "name": "@vuepress-plugin-imagemin/monorepo",
   "version": "0.0.6",
   "private": true,
   "description": "A VuePress plugin for compressing image assets",
@@ -20,9 +21,9 @@
   "license": "MIT",
   "author": "XLor",
   "scripts": {
-    "build": "pnpm run build -C core",
-    "build:play": "pnpm run build -C playground",
-    "dev:play": "pnpm run dev -C playground",
+    "build": "pnpm -C core run build",
+    "build:play": "pnpm -C playground run build",
+    "dev:play": "pnpm -C playground run dev",
     "format": "prettier --write core/**/*.ts",
     "lint:eslint": "eslint \"packages/**/*.{ts,tsx}\" --fix",
     "lint:pretty": "pretty-quick --staged",
@@ -50,7 +51,6 @@
     "@types/node": "^17.0.12",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
-    "bumpp": "^7.1.1",
     "commitizen": "^4.2.4",
     "conventional-changelog-cli": "^2.2.2",
     "cross-env": "^7.0.3",
@@ -58,16 +58,11 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^6.2.0",
     "lint-staged": "^12.3.2",
-    "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
-    "tsup": "^5.11.11",
-    "typescript": "^4.5.5",
-    "unbuild": "^0.6.8",
-    "vite": "^2.8.6",
-    "vitest": "^0.9.3"
+    "typescript": "^4.9.4",
+    "unbuild": "^1.0.2",
+    "vite": "^4.0.4",
+    "vitest": "^0.26.3"
   },
-  "peerDependencies": {
-    "vuepress": ">=2.0.0-beta.36"
-  },
-  "packageManager": "pnpm@6.32.4"
+  "packageManager": "pnpm@7.22.0"
 }

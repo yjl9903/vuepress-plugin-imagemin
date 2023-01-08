@@ -1,11 +1,14 @@
 {
+  "name": "@vuepress-plugin-imagemin/playground",
   "private": true,
   "scripts": {
     "build": "vuepress build",
     "dev": "vuepress dev"
   },
   "devDependencies": {
-    "vuepress": "^2.0.0-beta.36",
+    "@vuepress/client": "^2.0.0-beta.60",
+    "vue": "^3.2.45",
+    "vuepress": "^2.0.0-beta.60",
     "vuepress-plugin-imagemin": "workspace:*"
   }
 }
