@@ -6,54 +6,49 @@ A VuePress plugin for compressing image assets
 
 ## Install
 
-**node version:** >=12.0.0
-
-**vite version:** >=2.0.0
-
 ```bash
 npm i vuepress-plugin-imagemin -D
 ```
 
 ## Usage
 
-- Configuration plugin in vite.config.ts
+Configuration plugin in vite.config.ts
 
 ```ts
+import { defineUserConfig } from 'vuepress';
 import Imagemin from 'vuepress-plugin-imagemin'
 
-export default () => {
-  return {
-    plugins: [
-      Imagemin({
-        gifsicle: {
-          optimizationLevel: 7,
-          interlaced: false,
-        },
-        optipng: {
-          optimizationLevel: 7,
-        },
-        mozjpeg: {
-          quality: 20,
-        },
-        pngquant: {
-          quality: [0.8, 0.9],
-          speed: 4,
-        },
-        svgo: {
-          plugins: [
-            {
-              name: 'removeViewBox',
-            },
-            {
-              name: 'removeEmptyAttrs',
-              active: false,
-            },
-          ],
-        },
-      }),
-    ],
-  }
-}
+export default defineUserConfig({
+  plugins: [
+    Imagemin({
+      gifsicle: {
+        optimizationLevel: 7,
+        interlaced: false,
+      },
+      optipng: {
+        optimizationLevel: 7,
+      },
+      mozjpeg: {
+        quality: 20,
+      },
+      pngquant: {
+        quality: [0.8, 0.9],
+        speed: 4,
+      },
+      svgo: {
+        plugins: [
+          {
+            name: 'removeViewBox',
+          },
+          {
+            name: 'removeEmptyAttrs',
+            active: false,
+          },
+        ],
+      },
+    }),
+  ],
+});
 ```
 
 ### Options
@@ -70,23 +65,11 @@ export default () => {
 | pngquant | `object` or `false`                   | -       | See [Options](https://github.com/imagemin/imagemin-pngquant) |
 | webp     | `object` or `false`                   | -       | See [Options](https://github.com/imagemin/imagemin-webp)     |
 
-## Example
+## Inspiration
 
-**Run Example**
-
-```bash
-
-npm run dev:play
-npm run dev:build
-
-```
++ [vite-plugin-compress](https://github.com/alloc/vite-plugin-compress)
++ [vite-plugin-imagemin](https://github.com/vbenjs/vite-plugin-imagemin)
 
 ## License
 
 MIT
-
-## Inspiration
-
-+ [vite-plugin-compress](https://github.com/alloc/vite-plugin-compress)
-
-+ [vite-plugin-imagemin](https://github.com/vbenjs/vite-plugin-imagemin)
