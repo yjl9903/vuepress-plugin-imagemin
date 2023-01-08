@@ -1,7 +1,7 @@
 import type { Plugin, App } from 'vuepress'
 import type { FilterType, VuePressPluginImageminOption } from './types'
 
-import path from 'pathe'
+import * as path from 'pathe'
 import fs from 'fs-extra'
 import chalk from 'chalk'
 import Debug from 'debug'
@@ -42,32 +42,32 @@ export default function (options: VuePressPluginImageminOption = {}): Plugin {
     if (extRE.test(filename)) {
       const test = (cond: FilterType) => {
         if (typeof cond === 'string') {
-          return filename === cond;
+          return filename === cond
         } else if (isRegExp(cond)) {
-          return cond.test(filename);
+          return cond.test(filename)
         } else if (Array.isArray(cond)) {
           for (const c of cond) {
             if (typeof c === 'string') {
-              if (filename === c) return true;
+              if (filename === c) return true
             } else if (isRegExp(c)) {
-              if (c.test(filename)) return true;
+              if (c.test(filename)) return true
             }
           }
           return false
         } else if (isFunction(cond)) {
-          return cond(filename);
+          return cond(filename)
         } else {
-          return false;
+          return false
         }
-      };
+      }
 
       if (!exclude || !test(exclude)) {
-        return !include || test(include);
+        return !include || test(include)
       } else {
-        return false;
+        return false
       }
     } else {
-      return false;
+      return false
     }
   }
 

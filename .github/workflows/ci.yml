@@ -20,14 +20,13 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
           cache: pnpm
 
       - name: Install
         run: pnpm install
 
       - name: Build
-        run: pnpm build
-
-      # - name: Test
-      #   run: pnpm test
+        run: |
+          pnpm build
+          pnpm build:play

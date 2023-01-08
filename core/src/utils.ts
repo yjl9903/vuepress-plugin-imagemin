@@ -1,5 +1,5 @@
 import fs from 'fs-extra'
-import path from 'path'
+import * as path from 'pathe'
 
 export const isFunction = (arg: unknown): arg is (...args: any[]) => any =>
   typeof arg === 'function'
