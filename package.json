@@ -1,6 +1,6 @@
 {
   "name": "@vuepress-plugin-imagemin/monorepo",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "A VuePress plugin for compressing image assets",
   "keywords": [
