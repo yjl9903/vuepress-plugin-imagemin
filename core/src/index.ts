@@ -29,7 +29,7 @@ const extRE = /\.(png|jpeg|jpg|gif|bmp|svg|webp)$/i
 
 export default function (options: VuePressPluginImageminOption = {}): Plugin {
   let outputPath: string
-  let publicDir: string
+  let inputPath: string
   // let config: ResolvedConfig
 
   const { disable = false, include, exclude, verbose = true } = options
@@ -109,8 +109,8 @@ export default function (options: VuePressPluginImageminOption = {}): Plugin {
     enforce: 'post',
     onPrepared(app: App) {
       outputPath = app.dir.dest()
-      publicDir = app.dir.public()
-      debug({ outputPath, publicDir })
+      inputPath = app.dir.dest()
+      debug({ outputPath, inputPath })
     },
     // async generateBundle(_, bundler) {
     //   tinyMap.clear()
@@ -139,20 +139,20 @@ export default function (options: VuePressPluginImageminOption = {}): Plugin {
     async onGenerated() {
       debug('onGenerated')
 
-      if (publicDir) {
+      if (inputPath) {
         const files: string[] = []
 
         // try to find any static images in original static folder
-        readAllFiles(publicDir).forEach((file) => {
+        readAllFiles(inputPath).forEach((file) => {
           filterFile(file) && files.push(file)
         })
 
         debug({ files })
 
         if (files.length) {
-          const handles = files.map(async (publicFilePath: string) => {
+          const handles = files.map(async (inputFilePath: string) => {
             // now convert the path to the output folder
-            const filePath = path.relative(publicDir, publicFilePath)
+            const filePath = path.relative(inputPath, inputFilePath)
             const fullFilePath = path.join(outputPath, filePath)
 
             debug({ filePath, fullFilePath })
