@@ -1,8 +1,13 @@
-import { defineUserConfig } from 'vuepress';
-import Imagemin from 'vuepress-plugin-imagemin';
+import { viteBundler } from '@vuepress/bundler-vite'
+import { defaultTheme } from '@vuepress/theme-default'
+import { defineUserConfig } from 'vuepress'
+import Imagemin from 'vuepress-plugin-imagemin'
 
 export default defineUserConfig({
-  plugins: [
-    Imagemin()
-  ]
-});
+  bundler: viteBundler({
+    viteOptions: {},
+    vuePluginOptions: {},
+  }),
+  theme: defaultTheme({}),
+  plugins: [Imagemin()],
+})

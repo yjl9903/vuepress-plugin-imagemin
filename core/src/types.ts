@@ -8,7 +8,11 @@ import type { Options as JpegOptions } from 'imagemin-jpegtran'
 
 type EnabledOptions<T> = T | false
 
-export type FilterType = string | RegExp | Array<RegExp | string> | ((filename: string) => boolean)
+export type FilterType =
+  | string
+  | RegExp
+  | Array<RegExp | string>
+  | ((filename: string) => boolean)
 
 export interface SvgOption extends SvgoOptions {
   plugins: any[]
@@ -24,13 +28,13 @@ export interface VuePressPluginImageminOption {
   /**
    * Include files that need to be compressed
    */
-  include?: FilterType;
+  include?: FilterType
 
   /**
    * Include files that do not need to be compressed
    * It has higher priority than include
    */
-  exclude?: FilterType;
+  exclude?: FilterType
 
   /**
    * Whether to enable compression
