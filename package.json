@@ -68,7 +68,14 @@
   "packageManager": "pnpm@10.6.2",
   "pnpm": {
     "onlyBuiltDependencies": [
-      "optipng-bin"
+      "cwebp-bin",
+      "esbuild",
+      "gifsicle",
+      "jpegtran-bin",
+      "mozjpeg",
+      "optipng-bin",
+      "pngquant-bin",
+      "vue-demi"
     ]
   }
 }
